@@ -1,0 +1,43 @@
+plugins {
+  id 'org.hidetake.ssh' version '2.7.0'
+}
+
+ssh.settings {
+  dryRun = project.hasProperty('dryRun')
+}
+
+remotes {
+  web01 {
+    role 'webServer'
+    host = hostName//'52.87.248.106'
+    user = userName//'khali'
+    password = hostPassword//'Meesa211218'
+   // identity = file('id_rsa')
+    knownHosts = allowAnyHosts
+  }
+}
+
+
+def password
+ def username 
+ def giturl
+
+task getvalue <<{
+
+
+  println 'please give us the Git URL(for example: https://username:password@github.com/GeppettoTeam/repo.git)'
+  giturl= System.console().readLine()
+  println 'Please give Us the Branch name for check in your code--!'
+  username= System.console().readLine()
+  println 'giturl-------------! ->' +giturl
+  println 'finished---------------! - > '+username
+}
+task reload (dependsOn : 'getvalue')<< {
+  ssh.run {
+    session(remotes.role('webServer')) {
+      println 'Connected!'
+       execute 'sh script.sh testers Zz_10008 zz 10008 ' +username +' '+giturl
+       println 'Deployement fineshed'
+    }
+  }
+}

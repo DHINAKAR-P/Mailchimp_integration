@@ -1,0 +1,1 @@
+{"database":{"password":"tang3456","dialect":"mysql","name":"zz","host":"mydb","username":"root"},"jwt":{"jwtSecret":"MyS3cr3tK3Y","jwtSession":{"session":false}}}

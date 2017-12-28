@@ -1,0 +1,73 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+          aria-controls="collapseExample">Add Campaign</button>
+      </div>
+    </div>
+    <div class="row" class="collapse" id="collapseExample">
+      <div class="col-md-12">
+        <form (ngSubmit)="onSubmit()" #campaignForm="ngForm">
+          <label for="name">Select list </label>
+          <select class="form-control" [(ngModel)]="campaign.recipients.list_id" name="list_id">
+            <option value="" disabled>Select list</option>
+            <option [ngValue]="list.id" *ngFor="let list of lists">{{list.name}}</option>
+          </select>
+          <label for="name">Select Template </label>
+          <select class="form-control" [(ngModel)]="campaign.settings.template_id" name="template_id">
+            <option value="0" disabled>Select template</option>
+            <option [ngValue]="template.id" *ngFor="let template of templates">{{template.name}}</option>
+          </select>
+          <div class="form-group">
+            <label for="name">Campaign name</label>
+            <input required type="text" class="form-control" id="name" name="name" placeholder="Campaign name" [(ngModel)]="campaign.settings.title">
+          </div>
+          <div class="form-group">
+            <label for="subjectline">Subject line</label>
+            <input required type="text" class="form-control" id="subjectline" name="subjectline" placeholder="Subject line" [(ngModel)]="campaign.settings.subject_line">
+          </div>
+
+          <div class="form-group">
+            <label for="from_name">From name</label>
+            <input required type="text" class="form-control" id="from_name" name="from_name" placeholder="From Name" [(ngModel)]="campaign.settings.from_name">
+          </div>
+          <div class="form-group">
+            <label for="reply_to">Reply to</label>
+            <input required type="text" class="form-control" id="reply_to" name="reply_to" placeholder="example@gmail.com" [(ngModel)]="campaign.settings.reply_to">
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!campaignForm.form.valid">Save</button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">My campaigns</h3>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <ul class="col-md-12 list-group">
+                <li class="list-group-item" *ngFor="let campaign of campaigns">
+                  <div class="campaign-left">
+                    <h4>{{campaign.settings.title}}</h4>
+                    <p>{{campaign.type}}</p>
+                    <h5>{{campaign.recipients.list_name}}</h5>
+                    <span class="label label-info">{{campaign.status}}</span>
+                  </div>
+                  <div class="campaign-right">
+                    <a routerLink="/campaigns/{{campaign.id}}" class="btn btn-secondary">Details</a>
+                  </div>
+                  <div class="campaign-right">
+                    <button (click)="sendCampaign(campaign.id)" class="btn btn-secondary">Send</button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

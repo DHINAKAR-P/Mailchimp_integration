@@ -1,0 +1,84 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Zz
+host: apps.geppettosoftware.com:9090
+basePath: /Zz_10008
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /Person_Default_Activity/Person:
+    put:
+      description: Update Person
+      parameters:
+        - name: person
+          in: body
+          description: json object
+          required: true
+          type: string
+          schema:
+            $ref: '#/definitions/Person'
+      responses:
+        "200":
+          description: Success
+    get:
+      description: Get all Person
+      responses:
+        "200":
+          description: Success
+    post:
+      description: Create Person
+      parameters:
+        - name: person
+          in: body
+          description: json object
+          required: true
+          type: string
+          schema:
+            $ref: '#/definitions/Person'
+      responses:
+        "201":
+          description: Success
+  /Person_Default_Activity/Person/{PersonId}:
+    delete:
+      description: Delete Person
+      parameters:
+        - name: PersonId
+          in: path
+          description: id
+          required: true
+          type: integer
+
+      responses:
+        "204":
+          description: Success
+    get:
+      description: Get Person by id
+      parameters:
+        - name: PersonId
+          in: path
+          description: id
+          required: true
+          type: integer
+
+      responses:
+        "200":
+          description: Success
+
+definitions:
+  Person:
+    required:
+      - name
+      - price
+
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: 

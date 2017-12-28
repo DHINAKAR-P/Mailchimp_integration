@@ -1,0 +1,180 @@
+import org.gradle.api.tasks.Exec
+import groovy.json.*
+
+buildscript {
+  repositories {
+    jcenter()
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath 'org.hidetake:gradle-ssh-plugin:1.1.3'
+  }
+}
+
+apply plugin: 'org.hidetake.ssh'
+
+project.ext {
+  iosProjectFolder = projects_folder + '/mobile/ios/' + propProjectName
+  appid=''
+  appToken=''
+  appStatus =''
+  output=''
+  appLink=''
+  iosAppName = ''
+
+   tabletios = projects_folder + '/Tablet/ios/' + propProjectName
+   tabletappid=''
+   tabletappToken=''
+   tabletappStatus =''
+}
+
+repositories {
+  mavenCentral()
+}
+
+configurations {
+  antClasspath
+}
+
+dependencies {
+  antClasspath 'ant:ant-javamail:1.6.5', 'javax.activation:activation:1.1.1', 'javax.mail:mail:1.5.0-b01'
+}
+
+ClassLoader antClassLoader = org.apache.tools.ant.Project.class.classLoader
+configurations.antClasspath.each { File jar ->
+  antClassLoader.addURL( jar.toURI().toURL() )
+}
+
+def IOS_folder = new File(iosProjectFolder)
+def tablet_ios = new File(tabletios)
+
+remotes {
+  webServer {
+    host = propSSHHostName
+    user = propSSHUsername
+    password = propSSHPassword
+    knownHosts = allowAnyHosts
+  }
+}
+
+def executeCmd(command) {
+  def proc = command.execute()
+  proc.waitFor()
+  println proc.err.text
+  println proc.in.text
+}
+
+task iosApp() << {
+  String [] v = propiOSProjectDirPath.tokenize("/")
+  iosAppName=v[v.length-1]
+  println '-----'+iosAppName
+}
+iosApp.onlyIf {IOS_folder.exists()}
+
+// Doing SSH with Mac Server to Kick the iOS Generation
+task sshToMacServer(dependsOn: 'iosApp') << {
+  ssh.run {
+    println '\nConnecting to Mac server...'
+    session(remotes.webServer) {
+      println 'Connected to Mac server!'
+      execute 'test -d  /Users/administrator/Documents/'+iosAppName+'  && echo "Workspace already exists!" || mkdir  Documents/'+iosAppName
+      execute 'test -d ' + propiOSProjectDirPath + ' && echo "Workspace already exists!" || mkdir ' + propiOSProjectDirPath
+      println 'File transfering started to Mac server!'
+      execute 'test -d ' + propiOSProjectDirPath + ' && echo "WebContent workspace already exists!" || mkdir ' + propiOSProjectDirPath
+      put from: iosProjectFolder, into: propiOSProjectDirPath
+      put from: propScriptSourceDirName + '/build.gradle', into: propiOSProjectDirPath
+      put from: propScriptSourceDirName + '/gradle.properties', into: propiOSProjectDirPath
+      put from: propScriptSourceDirName + '/generate.sh', into: propiOSProjectDirPath
+      put from: propScriptSourceDirName + '/exec.sh', into: propiOSProjectDirPath
+      put from: propScriptSourceDirName + '/sendInvites.sh', into: propiOSProjectDirPath
+      println 'File transfer has been finished!'
+      println 'iOS application generation was started!'
+      execute 'sed -e \'s/\r$//\' ' + propiOSProjectDirPath + '/generate.sh > ' + propiOSProjectDirPath + '/start_execution.sh'
+      execute 'sed -e \'s/\r$//\' ' + propiOSProjectDirPath + '/exec.sh > ' + propiOSProjectDirPath + '/executable.sh'
+      execute 'chmod +x ' + propiOSProjectDirPath + '/start_execution.sh'
+      execute 'chmod +x ' + propiOSProjectDirPath + '/executable.sh'
+      execute '/bin/sh -c "sleep 20 ; echo GradleScript_for_IOS_App_Triggered_in_Mac"'
+     
+     def appname = iosAppName 
+        def userid = gpuserid 
+        def path =  propiOSProjectDirPath
+        def installrac = installrToken
+        def status = "Transfer_finished"
+
+        def json = new JsonBuilder()
+        def root = json appname: appname, userid: userid, path: path, installrac: installrac, status: status
+
+        print json.toString() 
+       exec{
+       commandLine 'curl','-H','Content-Type: application/json','POST','http://'+propSSHHostName+':8080/IPA_Details/create_IPA_Details/', '-d',json.toString() 
+    }
+      println 'iOS application has been generated and uploaded to installr!'
+    }
+  }
+}
+sshToMacServer.onlyIf {IOS_folder.exists()}
+
+task deployIonicApss(dependsOn: 'sshToMacServer'){
+  doLast{
+    println 'Ionic Apps deployed!'
+  }
+
+  // Tablet
+
+  task tabletiosApp() << {
+  String [] v = propiOSProjectDirPath.tokenize("/")
+  iosAppName=v[v.length-1]
+  println '-----'+iosAppName
+}
+tabletiosApp.onlyIf {tablet_ios.exists()}
+
+// Doing SSH with Mac Server to Kick the iOS Generation
+task tablet_sshToMacServer(dependsOn: 'tabletiosApp') << {
+  ssh.run {
+    println '\nConnecting to Mac server...'
+    session(remotes.webServer) {
+      println 'Connected to Mac server!'
+      execute 'test -d  /Users/administrator/Documents/'+iosAppName+'_tablet'+'  && echo "Workspace already exists!" || mkdir  Documents/'+iosAppName+'_tablet'
+      execute 'test -d ' + propiOSProjectDirPath+'_tablet' + ' && echo "Workspace already exists!" || mkdir ' + propiOSProjectDirPath +'_tablet'
+      println 'File transfering started to Mac server!'
+      execute 'test -d ' + propiOSProjectDirPath +'_tablet' + ' && echo "WebContent workspace already exists!" || mkdir ' + propiOSProjectDirPath +'_tablet'
+      put from: tabletios, into: propiOSProjectDirPath+'_tablet'
+      put from: propScriptSourceDirName + '/build.gradle', into: propiOSProjectDirPath +'_tablet'
+      put from: propScriptSourceDirName + '/gradle.properties', into: propiOSProjectDirPath+'_tablet'
+      put from: propScriptSourceDirName + '/generate.sh', into: propiOSProjectDirPath+'_tablet'
+      put from: propScriptSourceDirName + '/exec_tablet.sh', into: propiOSProjectDirPath+'_tablet'
+      put from: propScriptSourceDirName + '/sendInvites.sh', into: propiOSProjectDirPath+'_tablet'
+      println 'File transfer has been finished!'
+      println 'iOS application generation was started!'
+      execute 'sed -e \'s/\r$//\' ' + propiOSProjectDirPath+'_tablet' + '/generate.sh > ' + propiOSProjectDirPath+'_tablet' + '/start_execution.sh'
+      execute 'sed -e \'s/\r$//\' ' + propiOSProjectDirPath+'_tablet' + '/exec_tablet.sh > ' + propiOSProjectDirPath+'_tablet' + '/executable.sh'
+      execute 'chmod +x ' + propiOSProjectDirPath+'_tablet' + '/start_execution.sh'
+      execute 'chmod +x ' + propiOSProjectDirPath +'_tablet'+ '/executable.sh'
+      execute '/bin/sh -c "sleep 20 ; echo GradleScript_for_IOS_App_Triggered_in_Mac"'
+      def appname = iosAppName 
+        def userid = gpuserid 
+        def path =  propiOSProjectDirPath+'_tablet'
+        def installrac = installrToken
+        def status = "Transfer_finished"
+
+        def json = new JsonBuilder()
+        def root = json appname: appname, userid: userid, path: path, installrac: installrac, status: status
+
+        print json.toString()
+       exec{
+       commandLine 'curl','-H','Content-Type: application/json','POST','http://'+propSSHHostName+':8080/IPA_Details/create_IPA_Details/', '-d',json.toString() 
+    }
+      println 'Tablet iOS application has been generated and uploaded to installr!'
+    }
+  }
+}
+tablet_sshToMacServer.onlyIf {tablet_ios.exists()}
+
+task deployTabletApss(dependsOn: 'tablet_sshToMacServer'){
+  doLast{
+    println 'Tablet Apps deployed!'
+  }
+}
+}

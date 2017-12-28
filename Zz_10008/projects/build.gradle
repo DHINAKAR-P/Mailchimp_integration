@@ -1,0 +1,36 @@
+evaluationDependsOnChildren()
+task dockerComposeBuild(type:Exec) {
+  dependsOn subprojects.buildProject
+  workingDir './'
+  commandLine 'docker-compose','build'
+  standardOutput = new ByteArrayOutputStream()
+  ext.output = {
+    return standardOutput.toString()
+  }
+}
+
+task dockerComposeUp(type:Exec, dependsOn: dockerComposeBuild) {
+  workingDir './'
+  commandLine 'docker-compose','up','-d'
+  standardOutput = new ByteArrayOutputStream()
+  ext.output = {
+    return standardOutput.toString()
+  }
+}
+
+task startApp(dependsOn: dockerComposeUp)<< {
+  println 'Your application will be deployed into docker containers'
+}
+
+task dockerComposeStop(type:Exec) {
+  workingDir './'
+  commandLine 'docker-compose','down'
+  standardOutput = new ByteArrayOutputStream()
+  ext.output = {
+    return standardOutput.toString()
+  }
+}
+
+task stopApp(dependsOn: dockerComposeStop)<< {
+  println 'App stopped!'
+}

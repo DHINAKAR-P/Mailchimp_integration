@@ -1,0 +1,20 @@
+version: '2'
+services:
+  db:
+    container_name: Zz-10008-db
+    build: db
+    image: zz-10008/db
+    ports:
+      - "32657:3306"
+  node:
+    depends_on:
+      - db
+
+    container_name: Zz-10008-web
+    build: desktop
+    image: zz-10008/web
+    links:
+      - db:mydb
+
+    ports:
+      - "9090:3000"

@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+.navbar{
+	margin-bottom: 0;
+}
+
+header
+{
+	padding: 3em;
+}
+
+footer {
+  color: white;
+}
+footer h3 {
+  margin-bottom: 30px;
+}
+footer .footer-above {
+  padding-top: 50px;
+  background-color: #CCC;
+}
+footer .footer-col {
+  margin-bottom: 50px;
+}
+footer .footer-below {
+  padding: 25px 0;
+  background-color: #AAA;
+}

@@ -1,0 +1,43 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{campaign.settings.title}}</h3>
+          </div>
+          <div class="panel-body">
+            <!-- <form id="inputTemplateForm"  #campaignContentForm="ngForm">
+              <button type="submit" (click)="onSubmit(this.dhinaOb)" class="btn btn-primary" [disabled]="!campaignContentForm.form.valid">Save</button>
+            </form> -->
+            <!-- <div class=\"form-group\"><label for=\""+ element +"\">"+ element +"</label><input class=\"form-control\" id=\""+ element +"\"  \"[(ngModel)]=dhinaOb.item"+index+"  type=\"text\" placeholder=\""+ element +"\" \></div> -->
+            
+            <form id="datiRichiesta" [hidden]="datiRichiestaClicked">
+              <div class="form-group" *ngFor="let d of list_of_input">
+                  <!-- <label for=\""+ element +"\">"+ element +"</label><input class=\"form-control\" id=\""+ element +"\"  \"[(ngModel)]=dhinaOb.item"+index+"  type=\"text\" placeholder=\""+ element +"\" \></div> -->
+
+                  <!-- <input type="text" class="form-control"  placeholder="{{d.placeholder}}"   [(ngModel)]="model[d.modelPropName]"   name="{{d.name}}"   \> -->
+            
+                  <input type="text" 
+                      class="form-control" 
+                      placeholder="{{d.placeholder}}" 
+                      [(ngModel)]="dhinaOb[d.modelPropName]"
+                      name="{{d.name}}"
+                  />
+              </div>
+              <button type="submit" (click)="onSubmit(dhinaOb)" class="btn btn-primary" >Save</button>
+          </form>
+            <button class="btn btn-secondary pull-right" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+            aria-controls="collapseExample">Preview</button>
+            <iframe class="collapse" id="collapseExample" width="100%" height="900px" [srcdoc]="campaign_content.html | safe">
+            </iframe>
+
+            <!-- <div>
+            <dynamic-html [content]="content"></dynamic-html>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

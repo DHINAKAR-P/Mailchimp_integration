@@ -1,0 +1,8 @@
+.campaign-right {
+  text-align: right;
+  display: inline-block;
+  float: right;
+}
+.campaign-left {
+  display: inline-block;
+}

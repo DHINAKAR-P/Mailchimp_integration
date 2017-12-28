@@ -1,0 +1,6 @@
+{
+    "mailchimp": {
+        "api_key": "c2e22d8af35f23f96e7074e28cafc23d-us17",
+        "api_url": "https://us17.api.mailchimp.com/3.0/"
+    }
+}

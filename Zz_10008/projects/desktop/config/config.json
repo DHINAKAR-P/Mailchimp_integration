@@ -1,0 +1,1 @@
+{"database":{"password":"tang3456","dialect":"mysql","name":"testlocalmailchimp","host":"localhost","username":"gepuser"},"jwt":{"jwtSecret":"MyS3cr3tK3Y","jwtSession":{"session":false}}}
