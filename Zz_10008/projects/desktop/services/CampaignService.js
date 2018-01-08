@@ -93,6 +93,32 @@ module.exports.get_campaign_content = function (campaign_id, callback) {
     });
 }
 
+//PUT  edit_campaign_content 
+module.exports.put_campaign_content = function (Campaign,campaign_id, callback) {
+    // var campaign_id = campaign_id;
+    console.log("campaign_id- > ", campaign_id)
+    BaseMailchimpService.get_auth_header_value(function (maildata) {
+        auth = maildata.auth;
+        var options = {
+            method: 'PUT',
+            url: maildata.api_url + 'campaigns/' + campaign_id + '/content',
+            headers:
+                {
+                    'content-type': 'application/json',
+                    authorization: auth
+                },
+                body: Campaign,
+            json: true
+        };
+
+        request(options, function (error, response, body) {
+            if (error) throw new Error(error);
+            callback(body)
+
+        });
+
+    });
+}
 
 //Get get_campaign_By_Id
 module.exports.get_campaign_By_Id = function (campaign_id, callback) {

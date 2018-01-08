@@ -28,12 +28,16 @@ import { LoginComponent } from '././login/login.component';
 import { CampaignModule } from '././campaign/campaign.module';
 import { TemplateModule } from '././template/template.module';
 import { ListsModule } from '././list/list.module';
+import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { MatInputModule } from '@angular/material';
 
 @NgModule({
   imports: [ 
     BrowserModule,
+    MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    Ng2Bs3ModalModule,
     HttpModule,
     ToastModule.forRoot(),
     RouterModule.forRoot([

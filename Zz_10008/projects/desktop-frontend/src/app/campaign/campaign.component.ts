@@ -61,10 +61,10 @@ export class CampaignComponent implements OnInit {
   }
 
   get_fields(html_string: string){
-    //console.log("get_fields ------------- > ",html_string);
+    console.log("get_fields ------------- > ",html_string);
     var first = html_string.indexOf("*G|");
     console.log("first count - > ",first);
-    console.log("this.campaign.type - > ",this.campaign.type)
+    console.log("this.campaign.type - > ",this.campaign.type);
     if(this.campaign.type === 'regular' && first != -1){
       var field = html_string.substring(first+2,html_string.indexOf("|G*"));
       console.log("fields ------------- > ",field);
@@ -107,11 +107,12 @@ export class CampaignComponent implements OnInit {
 
   printObjetct(array_input){
     this.list_of_input = array_input
-    console.log("ONLY - > ",this.list_of_input)
-    
+    console.log("ONLY - > ",this.list_of_input);
   }
   onSubmit(eee){
-   // console.log("I am Here Babeyy- > ",this.myo);
+   console.log("I am Here Babeyy- > ",eee);
+   console.log("template id we are gettung ", this.campaign.settings.template_id)
+   var temp_id = this.campaign.settings.template_id;
     var temp_html = this.myo;
 
    // var replaced = temp_html.replace("*G|HEADER|G*",'a');
@@ -125,8 +126,14 @@ export class CampaignComponent implements OnInit {
 
 
 var compaign_template = {
-  html:temp_html,
-  name:"MY Name IS John Cena"
+  template: {
+    sections: {
+      title: eee["|TITLE"],
+      header: eee["|HEADER"],
+      body: eee["|BODY"]
+    },
+    id: temp_id,
+  }
 }
 
 

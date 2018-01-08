@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';  
+import { CKEditorModule } from 'ng2-ckeditor';
 import { CampaignsComponent } from "./campaigns.component";
 import { CampaignComponent } from "./campaign.component";
 import { CampaignService } from "./campaign.service";
@@ -16,6 +17,7 @@ import { SafePipe } from "./safe.pipe";
       SafePipe
     ],
     imports: [
+        CKEditorModule,
         MatInputModule,
         FormsModule,
         RouterModule.forChild([

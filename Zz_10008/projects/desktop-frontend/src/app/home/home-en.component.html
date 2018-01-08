@@ -29,3 +29,16 @@
 		</div>
 	</div>
 </section>
+
+<modal #modalSFU>
+	<modal-header [show-close]="true">
+		<h4 class="modal-title">Provide MailChimp API!</h4>
+	</modal-header>
+	<modal-body>
+		<input mdInput placeholder="Mail Chimp API"  />
+	</modal-body>
+	<modal-footer>
+		<button type="button" class="btn btn-default" data-dismiss="modal" (click)="modalSFU.dismiss()">Cancel</button>
+		<button type="button" class="btn btn-primary"> Proceed</button>
+	</modal-footer>
+</modal>

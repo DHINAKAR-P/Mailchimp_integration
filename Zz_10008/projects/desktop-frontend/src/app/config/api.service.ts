@@ -16,8 +16,10 @@ export class ApiService {
     private http: Http
   ) {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if (currentUser && currentUser.token) {
+    let api_key = localStorage.getItem('mailchimp_API');
+    if (currentUser && currentUser.token && api_key) {
         this.headers.append('Authorization', 'JWT ' + currentUser.token);
+        this.headers.append('API_KEY',api_key);
     }
   }
 

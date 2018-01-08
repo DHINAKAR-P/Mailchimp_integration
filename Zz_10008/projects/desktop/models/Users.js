@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
     lastname: DataTypes.STRING,
     username: DataTypes.STRING,
     password: DataTypes.STRING,
-
+    mailchimp_api: DataTypes.STRING
   },{
     timestamps: false,
     createdAt: false,
