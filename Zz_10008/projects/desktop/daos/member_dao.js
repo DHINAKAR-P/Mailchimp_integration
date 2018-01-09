@@ -21,15 +21,13 @@ module.exports.create_member = function(member ,callback){
                // for(var i =0 ; i<member_count.length ; i++){
                //   count = count + 1;
                // }
-               console.log("%%%%%%list details stats values are ", listdetails.stats);
+            //    console.log("%%%%%%list details stats values are ", listdetails);
+               if(listdetails !== null) {
                stats_dao.getstatsbyid(listdetails.stats ,function(statsdetails){
                    console.log("@@@@@statsdetails---",statsdetails)
                  //var countvalues = statsdetails.member_count+1;
                  //statsdetails.member_count = countvalues;
                  var statsvalues = statsdetails ;
-                  console.log("SSSSSSSSSStats values  ==----- ",statsvalues)
-                  console.log("SSSSSSSSSStats values  ==--count--- ",statsvalues[0].member_count)
-                  console.log("SSSSSSSSSStats values  ==---incre count-- ",statsvalues[0].member_count+1)
                  statsvalues[0].member_count = statsvalues[0].member_count + 1;
                  stats_dao.update_stats(statsvalues,function(values){
                    if(values){
@@ -39,24 +37,24 @@ module.exports.create_member = function(member ,callback){
        
                //})
               })
+            }
 
             })
 
-            console.log("create list value success")
         callback(member);
     }
     })
 }
 
-// module.exports.update_list = function(list , callback){
-//     list_model.findOneAndUpdate({_id : list.id},
-//     { $set:list},
-// { upsert:true , new : true},function(list,err){
+// module.exports.update_member = function(member , callback){
+//     member_model.findOneAndUpdate({_id : member.id},
+//     { $set:member},
+// { upsert:true , new : true},function(err,member){
 //     if(err){
 //     callback(err)
 // }
 // else{
-//     callback(list)
+//     callback(member)
 // }
 // })
 // }
@@ -74,11 +72,15 @@ module.exports.getmemberbyuserid = function(userid  ,callback){
 }
 
 module.exports.get_all_list_member = function(member_id ,callback){
-    list_model.findById(member_id,function(err,member){
+    console.log("member_id");
+    member_model.findById(member_id,function(err,member){
+        console.log("member data ------2222-",member)
         if(err){
+            
             callback(err);
         }
         else{
+            
             callback(member);
         }
     })
@@ -95,8 +97,8 @@ module.exports.get_all_member = function(callback){
     })
 }
 
-// module.exports.delete_list = function(list_id ,callback){
-//     list_model.findByIdAndRemove(list_id , function(err,data){
+// module.exports.delete_member = function(member_id ,callback){
+//     member_model.findByIdAndRemove(member_id , function(err,data){
 //         if(err){
 //        callback(err);
 //         }

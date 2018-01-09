@@ -10,3 +10,8 @@ module.exports.get_user = function(username,password, callback) {
       }
   });
 }
+module.exports.update_user = function(userdetails , callback){
+  dao.update_user(userdetails , function(userdata){
+    callback(userdata);
+  })
+}

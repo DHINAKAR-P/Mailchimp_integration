@@ -35,4 +35,8 @@ export class CampaignService {
     edit_template(template_id:string,compaign_template :any): Observable<any>{
         return this.apiService.put(this.config.api_url+`/mailchimp/campaigns/${template_id}/content`,compaign_template);
     }
+
+    update_user_details(user: any): Observable<any>{
+        return this.apiService.put(this.config.api_url+`/user/updateUser`,user);
+    }
 }

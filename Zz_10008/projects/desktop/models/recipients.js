@@ -7,7 +7,7 @@ var recipients_schema = new mongoose.Schema({
    created_by: {type : Number},
    updated_by: {type : Number},
    updated_date:{type : Date ,default: Date.now()},
-   list_id:{type : Schema.Types.Number , ref:'List'},
+   list_id:{type:Schema.Types.Number , ref:'List'},
    list_is_active:{type:Boolean},
    list_name : {type:String},
    recipient_count:{type:Number}

@@ -1,3 +1,5 @@
+
+
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 
@@ -9,9 +11,12 @@ var User_schema = new mongoose.Schema({
     firstname : {type: String },
     lastname : {type:String},
     username : {type: String },
-    password : {type:String},
-    mailchimp_api: {type:String},
-    mailchimp_url: {type:String}
+   mailchimp_api: {type:String},
+  mailchimp_url: {type:String},
+  domain: {type:String},
+  smtp_email: {type:String},
+ password: {type:String}
+ 
  
 },{
     versionKey : false

@@ -59,8 +59,15 @@ module.exports.get_campaign_content = function(req, res) {
   if (req.headers.api_key && req.headers.api_url) {
    // var campaign_id = req.params.id;
     service.get_campaign_content(campaign_id, req.headers.api_key, req.headers.api_url, function (campaignContent) {
+     res.status(201);
       res.json(campaignContent);
     });
+  }
+  else{
+    campaign_localservices.get_Campaign_content(campaign_id,function(campaign){
+      res.status(201);
+      res.json(campaign);
+    })
   }
 }
 
@@ -76,6 +83,7 @@ module.exports.get_campaign_By_Id = function(req, res) {
   }
 else{
   campaign_localservices.search_Campaign_for_update(campaign_id,function(campaignContent){
+   // console.log("SSSSuccesfully getting data using campaignid",campaignContent)
     res.json(campaignContent);
   })
 }
@@ -89,5 +97,11 @@ module.exports.put_campaign_content = function (req, res) {
     service.put_campaign_content(Campaign, req.headers.api_key, req.headers.api_url, campaign, function (campaignContent) {
       res.json(campaignContent);
     });
+  }
+  else{
+    campaign_localservices.update_Campaign(campaign,Campaign,function(campaignContent){
+      res.status(201);
+      res.json(campaignContent);
+    })
   }
 }

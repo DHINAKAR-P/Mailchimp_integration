@@ -70,7 +70,7 @@ module.exports.send_Campaign = function (Campaign_id,api_key, api_url, callback)
 //Get  get_campaign_content 
 module.exports.get_campaign_content = function (campaign_id, api_key, api_url, callback) {
     var campaign_id = campaign_id;
-    console.log("campaign_id- > ", )
+  //  console.log("campaign_id- > ", )
     BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
         auth = maildata.auth;
         var options = {

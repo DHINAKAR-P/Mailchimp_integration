@@ -22,30 +22,31 @@ recipients_dao.create_recipients(campaign.recipients ,function(recipients){
     var id = settings._id;
     campaign.settings = id;
 
-    variate_settings_dao.create_variate_settings(campaign.variate_settings , function(variate_settings){
-      console.error("creating variate_settings---")
+    // variate_settings_dao.create_variate_settings(campaign.variate_settings , function(variate_settings){
+    //   console.error("creating variate_settings---")
       
-      var id = variate_settings._id;
-      campaign.variate_settings = id;
+    //   var id = variate_settings._id;
+    //   campaign.variate_settings = id;
 
-      tracking_dao.create_tracking(campaign.tracking ,function(tracking){
-        console.error("creating trackings---")
+    //   tracking_dao.create_tracking(campaign.tracking ,function(tracking){
+    //     console.error("creating trackings---")
         
-        var id = tracking._id;
-        campaign.tracking = id;
+    //     var id = tracking._id;
+    //     campaign.tracking = id;
 
-        rss_opts_dao.create_rss_opts(campaign.rss_opts , function(rss_opts){
-          console.error("creating rss_opts---")
+        // rss_opts_dao.create_rss_opts(campaign.rss_opts , function(rss_opts){
+        //   console.error("creating rss_opts---")
           
-          var id = rss_opts._id;
-          campaign.rss_opts = id;
+        //   var id = rss_opts._id;
+        //   campaign.rss_opts = id;
 
-          social_card_dao.create_social_card(campaign.social_card , function(social_card){
-            console.error("creating social_Card---")
+        //   social_card_dao.create_social_card(campaign.social_card , function(social_card){
+        //     console.error("creating social_Card---")
             
-            var id = social_card._id;
-            campaign.social_card = id;
-            
+        //     var id = social_card._id;
+        //     campaign.social_card = id;
+            campaign.status = "drop";
+            console.log("^^^^saving campaign------",campaign)
             dao.create_Campaign(campaign,function (campaign){
                var id = campaign._id;
                   campaign.id = id;
@@ -54,25 +55,42 @@ recipients_dao.create_recipients(campaign.recipients ,function(recipients){
                 });
 
           }) 
-        })
-      })
-    })
-  })
+    //     })
+    //   })
+   // })
+//  })
 })
 
 }
-module.exports.update_Campaign = function(Campaign,callback) {
-  dao.update_Campaign(Campaign,function (Campaign){
+module.exports.update_Campaign = function(campaign_id,campaign,callback) {
+  dao.update_Campaign(campaign_id,campaign,function (Campaign){
     var id = Campaign._id;
     Campaign.id = id;
-    callback(Campaign);
+    Campaign.status = "save";
+    this.campaigndata = {campaigns : Campaign};
+    callback(campaigndata);
   });
 }
 module.exports.search_Campaign_for_update = function(Campaign_id,callback) {
+  console.log("campaign id values----get content--->>> ",Campaign_id)
   dao.search_Campaign_for_update(Campaign_id,function (Campaign){
     var id = Campaign._id;
     Campaign.id = id;
-    callback(Campaign)
+
+   // this.campaigndata = { campaigns : Campaign }
+    callback(Campaign);
+  });
+}
+
+module.exports.get_Campaign_content = function(Campaign_id,callback) {
+  console.log("campaign id values----get content--->>> ",Campaign_id)
+  dao.get_Campaign_content(Campaign_id,function (Campaign){
+    var id = Campaign._id;
+    Campaign.id = id;
+   
+
+   // this.campaigndata = { campaigns : Campaign }
+    callback(Campaign.settings.template_id);
   });
 }
 module.exports.delete_Campaign = function(Campaign_id,callback) {
@@ -81,17 +99,21 @@ module.exports.delete_Campaign = function(Campaign_id,callback) {
   });
 }
 module.exports.get_all_Campaign = function(callback) {
-  var campaigns = [];
+  // var campaigns = [];
   dao.get_all_Campaign(function (list_of_Campaign){
     var count = 0;
      for(var i = 0; i<list_of_Campaign.length; i++){
      var id = list_of_Campaign[i]._id; 
      list_of_Campaign[i].id = id;
+     console.log("######get all campaign------  ",list_of_Campaign[i].recipients.list_id.name)
+     list_of_Campaign[i].recipients.list_name = list_of_Campaign[i].recipients.list_id.name;
      count ++;
      }
      if(list_of_Campaign.length === count){
-         campaigns.push(list_of_Campaign);
-      callback(list_of_Campaign)
+       //  campaigns.push(list_of_Campaign);
+     //    console.log("cccccccccampaing data---",campaigns)
+        this.campaigndata = { campaigns : list_of_Campaign }
+      callback(campaigndata)
   }
   });
 }

@@ -32,13 +32,28 @@
 
 <modal #modalSFU>
 	<modal-header [show-close]="true">
-		<h4 class="modal-title">Provide MailChimp API!</h4>
+		<h4 class="modal-title">Provide Details...!</h4>
 	</modal-header>
 	<modal-body>
-		<input mdInput placeholder="Mail Chimp API"  />
+		<input type="radio" name="toggle" [value]="select_opt_mailchimp" (click)="select_opt_mailchimp_method()">MailChimp Details 
+		<input type="radio" name="toggle" [value]="select_opt_smtp" (click)="select_opt_smtp_method()">SMTP Details
+		<div class="">
+			<div class="row left" *ngIf="select_opt_mailchimp">
+				<h4 class="modal-title">MailChimp Details : </h4>
+				<input type="text" name="api_key" placeholder="Mailchimp API_KEY" [(ngModel)]="mailchip.api_key" />
+				<input type="text" name="api_url" placeholder="Mailchimp API_URL" [(ngModel)]="mailchip.api_url" />
+			</div>
+			
+			<div class="row left" *ngIf="select_opt_smtp">
+				<h4 class="modal-title">SMTP Details : </h4>
+				<input type="text" name="domain" placeholder="DOMAIN: gmail, yahoo, hotmail .... " [(ngModel)]="smtp.domain" />
+				<input type="text" name="email" placeholder="Email-ID: abc@xyz.com " [(ngModel)]="smtp.smtp_email" />
+				<input type="password" name="password" placeholder="Password: ***** " [(ngModel)]="smtp.password" />
+			</div>
+		</div>
 	</modal-body>
 	<modal-footer>
 		<button type="button" class="btn btn-default" data-dismiss="modal" (click)="modalSFU.dismiss()">Cancel</button>
-		<button type="button" class="btn btn-primary"> Proceed</button>
+		<button type="button" class="btn btn-primary" (click)="save_details()"> Proceed</button>
 	</modal-footer>
 </modal>

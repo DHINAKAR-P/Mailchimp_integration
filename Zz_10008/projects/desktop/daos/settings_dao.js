@@ -14,3 +14,16 @@ module.exports.create_settings = function(settings ,callback){
     }
     })
 }
+
+module.exports.update_settings = function(settings , callback){
+    settings_model.findOneAndUpdate({_id : settings.id},
+    { $set:settings},
+{ upsert:true , new : true},function(settings,err){
+    if(err){
+    callback(err)
+}
+else{
+    callback(settings)
+}
+})
+}

@@ -1,6 +1,7 @@
 var service = require("../services/TemplateService")
 var mail_config = require("../config/mail_config")
 var template_localservice = require("../services/Template_localservice")
+var campaign_template_localservice = require("../services/Campaign_template_localservice")
 
 //GET ALl Template
 module.exports.get_all_Template = function (req, res) {
@@ -76,7 +77,8 @@ module.exports.edit_Template = function (req, res) {
     });
   }
   else{
-template_localservice.update_template(Template_id,Template , function(template){
+    console.log("edited html template____-",Template);
+campaign_template_localservice.create_campaign_template(Template_id, Template , function(template){
   res.status(201);
   res.json(template);
 })
