@@ -116,26 +116,27 @@ export class CampaignComponent implements OnInit {
     var temp_html = this.myo;
 
    // var replaced = temp_html.replace("*G|HEADER|G*",'a');
-
+    var data = {};
     Object.keys(eee).forEach(function(key) {
       console.log("key","*G"+key+"|G*")
-      console.log("value",eee[key])
+      console.log("value",eee[key]);
+      var res_key = key.substring(1).toLowerCase();
+      data[res_key] = eee[key];
+      // data[]
     //  console.log("str.indexOf",temp_html.indexOf("HEADER"));
     temp_html= temp_html.replace("*G"+key+"|G*",eee[key]);
     });
 
+    console.log("------------------------eeeeee------------------>>> ", eee)
+    console.log("ONLY - kist to parese> ",this.list_of_input);
+
 
 var compaign_template = {
   template: {
-    sections: {
-      title: eee["|TITLE"],
-      header: eee["|HEADER"],
-      body: eee["|BODY"]
-    },
+    sections: data,
     id: temp_id,
   }
 }
-
 
     this.campaign_service.edit_template(this.route.snapshot.paramMap.get('id'),compaign_template).subscribe(data => {
       this.campaign = data;
@@ -143,7 +144,7 @@ var compaign_template = {
     error => {
       this.toastr.error('Check the browser console to see more info.','Error!');
     });
-    console.log("I am Here Babeyy- > ",temp_html);
+    console.log("I am Here Babeyy- > ",compaign_template);
     
  }
 

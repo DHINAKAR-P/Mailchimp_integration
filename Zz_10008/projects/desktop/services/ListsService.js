@@ -2,10 +2,10 @@ var BaseMailchimpService = require("./BaseMailchimpService")
 var request = require("request");
 
 //Get
-module.exports.get_all_list_Member = function (list_id, callback) {
+module.exports.get_all_list_Member = function (list_id,api_key, api_url, callback) {
   var list_id = list_id;
   console.log("list_id- > ", list_id)
-  BaseMailchimpService.get_auth_header_value(function (maildata) {
+  BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
     auth = maildata.auth;
     var options = {
       method: 'GET',
@@ -28,8 +28,8 @@ module.exports.get_all_list_Member = function (list_id, callback) {
 }
 
 //GET List/members
-module.exports.get_all_Lists = function (callback) {
-  BaseMailchimpService.get_auth_header_value(function (maildata) {
+module.exports.get_all_Lists = function (api_key, api_url, callback) {
+  BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
     console.log("mail data- >>>>", maildata)
     auth = maildata.auth;
     var options = {
@@ -53,9 +53,9 @@ module.exports.get_all_Lists = function (callback) {
 }
 
 
-module.exports.create_List = function (list, callback) {
+module.exports.create_List = function (list, api_key, api_url, callback) {
   console.log("list------------------- - > ", list);
-  BaseMailchimpService.get_auth_header_value(function (maildata) {
+  BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
     console.log("create List- >>>>", maildata)
     auth = maildata.auth;
     var options = {
@@ -79,9 +79,9 @@ module.exports.create_List = function (list, callback) {
   });
 }
 
-module.exports.add_member_to_list = function (list_id, memberdata, callback) {
+module.exports.add_member_to_list = function (list_id, api_key, api_url, memberdata, callback) {
   var list_id = list_id;
-  BaseMailchimpService.get_auth_header_value(function (maildata) {
+  BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
     auth = maildata.auth;
     var options = {
       method: 'POST',

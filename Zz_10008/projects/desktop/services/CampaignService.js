@@ -1,8 +1,8 @@
 var BaseMailchimpService = require("./BaseMailchimpService")
 var request = require("request");
 
-module.exports.get_all_campaigns = function (callback) {
-    BaseMailchimpService.get_auth_header_value(function (maildata) {
+module.exports.get_all_campaigns = function (api_key, api_url, callback) {
+    BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
         auth = maildata.auth;
         var options = {
             method: 'GET',
@@ -21,8 +21,8 @@ module.exports.get_all_campaigns = function (callback) {
     });
 }
 
-module.exports.create_Campaign = function (Campaign, callback) {
-    BaseMailchimpService.get_auth_header_value(function (maildata) {
+module.exports.create_Campaign = function (Campaign, api_key, api_url, callback) {
+    BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
         auth = maildata.auth;
         var options = {
             method: 'POST',
@@ -43,8 +43,8 @@ module.exports.create_Campaign = function (Campaign, callback) {
 }
 
 
-module.exports.send_Campaign = function (Campaign_id, callback) {
-    BaseMailchimpService.get_auth_header_value(function (maildata) {
+module.exports.send_Campaign = function (Campaign_id,api_key, api_url, callback) {
+    BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
         auth = maildata.auth;
         console.log(maildata.api_url + 'campaigns/' + Campaign_id + '/actions/send');
         var options = {
@@ -68,10 +68,10 @@ module.exports.send_Campaign = function (Campaign_id, callback) {
 
 
 //Get  get_campaign_content 
-module.exports.get_campaign_content = function (campaign_id, callback) {
+module.exports.get_campaign_content = function (campaign_id, api_key, api_url, callback) {
     var campaign_id = campaign_id;
-    console.log("campaign_id- > ", campaign_id)
-    BaseMailchimpService.get_auth_header_value(function (maildata) {
+    console.log("campaign_id- > ", )
+    BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
         auth = maildata.auth;
         var options = {
             method: 'GET',
@@ -94,10 +94,10 @@ module.exports.get_campaign_content = function (campaign_id, callback) {
 }
 
 //PUT  edit_campaign_content 
-module.exports.put_campaign_content = function (Campaign,campaign_id, callback) {
+module.exports.put_campaign_content = function (Campaign, api_key, api_url,campaign_id, callback) {
     // var campaign_id = campaign_id;
     console.log("campaign_id- > ", campaign_id)
-    BaseMailchimpService.get_auth_header_value(function (maildata) {
+    BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
         auth = maildata.auth;
         var options = {
             method: 'PUT',
@@ -121,14 +121,15 @@ module.exports.put_campaign_content = function (Campaign,campaign_id, callback) 
 }
 
 //Get get_campaign_By_Id
-module.exports.get_campaign_By_Id = function (campaign_id, callback) {
+module.exports.get_campaign_By_Id = function (campaign_id, api_key, api_url,callback) {
     var campaign_id = campaign_id;
-    console.log("Get campaign By id ---  ", campaign_id)
-    BaseMailchimpService.get_auth_header_value(function (maildata) {
+    console.log("Get campaign By id ---  ", campaign_id);
+    console.log("in campign get by id ------------> ", api_key, api_url);
+    BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
         auth = maildata.auth;
         var options = {
             method: 'GET',
-            url: maildata.api_url + 'campaigns/' + campaign_id,
+            url: maildata.api_url + '/campaigns/' + campaign_id,
             headers:
                 {
                     'content-type': 'application/json',

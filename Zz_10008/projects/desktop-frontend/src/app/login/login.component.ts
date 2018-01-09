@@ -6,8 +6,6 @@ import { UserService } from '../config/user.service';
 import { AuthService } from '../login/auth.service';
 import { ApiService } from '../config/api.service';
 import { ConfigService } from '../config/config.service';
-
-
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/interval';
@@ -17,7 +15,7 @@ import 'rxjs/add/observable/interval';
   templateUrl: './login.component.html',
   providers: [UserService,ApiService,ConfigService,AuthService,FormBuilder],
   styleUrls: ['style.css']
-
+ 
 })
 export class LoginComponent implements OnInit {
    data:any={};
@@ -35,7 +33,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-
+ 
   }
 
 

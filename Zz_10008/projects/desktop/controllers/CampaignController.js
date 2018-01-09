@@ -2,8 +2,8 @@ var service = require("../services/CampaignService");
 
 //GET ALl Template
 module.exports.get_all_campaigns = function (req, res) {
-  if (req.headers.api_key) {
-    service.get_all_campaigns(function (campaign) {
+  if (req.headers.api_key && req.headers.api_url) {
+    service.get_all_campaigns(req.headers.api_key, req.headers.api_url, function (campaign) {
       res.json(campaign);
     });
   }
@@ -11,9 +11,9 @@ module.exports.get_all_campaigns = function (req, res) {
 
 //POST Campaign
 module.exports.create_Campaign = function (req, res) {
-  if (req.headers.api_key) {
+  if (req.headers.api_key && req.headers.api_url) {
     var Campaign = req.body;
-    service.create_Campaign(Campaign, function (campaign) {
+    service.create_Campaign(Campaign,req.headers.api_key, req.headers.api_url,function (campaign) {
       res.status(201);
       res.json(campaign);
     });
@@ -22,10 +22,10 @@ module.exports.create_Campaign = function (req, res) {
 
 ///campaigns/{campaign_id}/actions/send
 module.exports.send_Campaign = function (req, res) {
-  if (req.headers.api_key) {
+  if (req.headers.api_key && req.headers.api_url) {
     var campaign_id = req.params.id;
     console.log("campaign_id - > ", campaign_id);
-    service.send_Campaign(campaign_id, function (campaign) {
+    service.send_Campaign(campaign_id, req.headers.api_key, req.headers.api_url, function (campaign) {
       res.status(201);
       res.json(campaign);
     });
@@ -35,9 +35,9 @@ module.exports.send_Campaign = function (req, res) {
 
 //GET Add campaign Content
 module.exports.get_campaign_content = function (req, res) {
-  if (req.headers.api_key) {
+  if (req.headers.api_key && req.headers.api_url) {
     var campaign_id = req.params.id;
-    service.get_campaign_content(campaign_id, function (campaignContent) {
+    service.get_campaign_content(campaign_id, req.headers.api_key, req.headers.api_url, function (campaignContent) {
       res.json(campaignContent);
     });
   }
@@ -45,10 +45,10 @@ module.exports.get_campaign_content = function (req, res) {
 
 //PUT Edit campaign Content
 module.exports.put_campaign_content = function (req, res) {
-  if (req.headers.api_key) {
+  if (req.headers.api_key && req.headers.api_url) {
     var Campaign = req.body;
     var campaign = req.params.id;
-    service.put_campaign_content(Campaign, campaign, function (campaignContent) {
+    service.put_campaign_content(Campaign, req.headers.api_key, req.headers.api_url, campaign, function (campaignContent) {
       res.json(campaignContent);
     });
   }
@@ -56,9 +56,10 @@ module.exports.put_campaign_content = function (req, res) {
 
 //GET Add campaign By ID
 module.exports.get_campaign_By_Id = function (req, res) {
-  if (req.headers.api_key) {
+  if (req.headers.api_key && req.headers.api_url) {
     var campaign_id = req.params.id;
-    service.get_campaign_By_Id(campaign_id, function (campaignContent) {
+    console.log("in campign get by id ------------> ", req.headers.api_key, req.headers.api_url);
+    service.get_campaign_By_Id(campaign_id, req.headers.api_key, req.headers.api_url, function (campaignContent) {
       res.json(campaignContent);
     });
   }

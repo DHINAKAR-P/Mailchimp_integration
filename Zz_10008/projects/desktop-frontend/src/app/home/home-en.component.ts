@@ -15,6 +15,7 @@ export class HomeENComponent implements OnInit {
     var json = JSON.parse(cookiedata);
     this.user_array = json.user;
     localStorage.setItem('mailchimp_API', this.user_array.mailchimp_api); 
+    localStorage.setItem('mailchimp_URL', this.user_array.mailchimp_url); 
     if(this.user_array.mailchimp_api === null || this.user_array.mailchimp_api === '') {
       console.log("------------------------> ", this.user_array);
       this.mymodalSFU.open();

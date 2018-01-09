@@ -2,8 +2,8 @@ var BaseMailchimpService = require("./BaseMailchimpService")
 var request = require("request");
 
 //---------------------------
-module.exports.get_all_Template = function (callback) {
-  BaseMailchimpService.get_auth_header_value(function (maildata) {
+module.exports.get_all_Template = function (api_key, api_url, callback) {
+  BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
     auth = maildata.auth;
     var options = {
       method: 'GET',
@@ -23,8 +23,8 @@ module.exports.get_all_Template = function (callback) {
 }
 
 
-module.exports.get_all_Template_by_user = function (callback) {
-  BaseMailchimpService.get_auth_header_value(function (maildata) {
+module.exports.get_all_Template_by_user = function (api_key, api_url, callback) {
+  BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
     auth = maildata.auth;
     var options = {
       method: 'GET',
@@ -44,8 +44,8 @@ module.exports.get_all_Template_by_user = function (callback) {
 }
 
 
-module.exports.get_Template_by_id = function (Template_id, callback) {
-  BaseMailchimpService.get_auth_header_value(function (maildata) {
+module.exports.get_Template_by_id = function (Template_id, api_key, api_url, callback) {
+  BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
     auth = maildata.auth;
     var options = {
       method: 'GET',
@@ -64,9 +64,9 @@ module.exports.get_Template_by_id = function (Template_id, callback) {
   });
 }
 
-module.exports.create_Template = function (Template, callback) {
+module.exports.create_Template = function (Template, api_key, api_url, callback) {
   console.log("Template - > ",Template)
-  BaseMailchimpService.get_auth_header_value(function (maildata) {
+  BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
     auth = maildata.auth;
     console.log("Template ------------- > ",Template);
     var options = {
@@ -87,10 +87,10 @@ module.exports.create_Template = function (Template, callback) {
   });
 }
 
-module.exports.edit_Template = function (Template,Template_id, callback) {
+module.exports.edit_Template = function (Template,Template_id, api_key, api_url, callback) {
   console.log("Template - > ",Template.name)
   console.log("Template_id -- > ",Template_id);
-  BaseMailchimpService.get_auth_header_value(function (maildata) {
+  BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
     auth = maildata.auth;
     console.log("Template ------------- > ",Template);
     var options = {
