@@ -1,21 +1,17 @@
-'use strict';
+var mongoose = require('mongoose');
+var autoIncrement = require('mongoose-auto-increment');
 
-module.exports = function(sequelize, DataTypes) {
-  var Person = sequelize.define("Person", {
-    id: {
-    	type : DataTypes.INTEGER,
-    	primaryKey : true,
-    	autoIncrement : true
-    },
-    created_by: DataTypes.INTEGER,
-    updated_by: DataTypes.INTEGER,
-    updated_date:DataTypes.DATE,
-    name: DataTypes.STRING,
-    price: DataTypes.INTEGER
-  },{
-    createdAt: false,
-    updatedAt: false,
-    freezeTableName:true
-  });
-  return Person;
-};
+var Person_schema = new mongoose.Schema({
+   id: {type : Number},
+   created_by: {type : Number},
+   updated_by: {type : Number},
+   updated_date:{type : Date ,default: Date.now()},
+   name:{type : String},
+   price:{type: Number}
+
+},{
+    versionKey: false // You should be aware of the outcome after set to false
+});
+autoIncrement.initialize(mongoose);
+Person_schema.plugin(autoIncrement.plugin,{ model: 'Person', startAt: 1 });
+module.exports = mongoose.model('Person', Person_schema);

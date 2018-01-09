@@ -6,10 +6,12 @@ import { MatInputModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { TemplatesComponent } from "./templates.component";
 import { TemplateService } from "./template.service";
+import { TemplatePipe } from "./temp.pipe";
 
 @NgModule({
     declarations: [
-      TemplatesComponent
+      TemplatesComponent,
+      TemplatePipe
     ],
     imports: [
         MatInputModule,

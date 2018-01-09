@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 
-var Member_schema = new mongoose.Schema({
+var social_card_schema = new mongoose.Schema({
 //    member_id: {type: mongoose.Schema.Types.ObjectId,
 //     index: true,
 //     required: true,
@@ -12,17 +12,17 @@ var Member_schema = new mongoose.Schema({
    id:{type:Number},
    created_by: {type : Number},
    updated_by: {type : Number},
-   id:{type:String},
    updated_date:{type : Date ,default: Date.now()},
-   email_address:{type : String},
-   status:{type:String}
+   image_url:{type : String},
+   description:{type:String},
+   title:{type:String}
 },{
     versionKey: false // You should be aware of the outcome after set to false
 });
 autoIncrement.initialize(mongoose);
-Member_schema.plugin(autoIncrement.plugin,{ model: 'Member', startAt: 1 });
-var Member = mongoose.model('Member', Member_schema);
-module.exports = Member;
+social_card_schema.plugin(autoIncrement.plugin,{ model: 'social_card', startAt: 1 });
+module.exports  = mongoose.model('social_card', social_card_schema);
+
 
 
 

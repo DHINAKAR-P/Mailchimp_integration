@@ -29,10 +29,13 @@
           <div class="panel-body">
             <div class="row">
               <div class="col-xs-6 col-md-3 text-center" *ngFor="let template of templates">
-                <div class="thumbnail">
+                <!-- <div class="thumbnail">
                   <img src="{{template.thumbnail}}" alt="{{template.name}}">
-                </div>
+                </div> -->
+                <div class="thumbnail">
+                <iframe [srcdoc]="template.html | temp"> </iframe>
                 <span>{{template.name}}</span>
+              </div>
               </div>
             </div>
           </div>

@@ -6,6 +6,7 @@
     "start": "node main"
   },
   "dependencies": {
-    "geppetto_node_pacakge": "^1.0.0"
+    "geppetto_node_pacakge": "^1.0.0",
+    "nodemailer": "^4.4.1"
   }
 }
