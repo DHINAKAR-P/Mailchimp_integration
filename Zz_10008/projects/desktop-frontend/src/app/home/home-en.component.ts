@@ -30,10 +30,10 @@ export class HomeENComponent implements OnInit {
     this.smtp.smtp_password='';
 
     if(mailchimp_api === undefined || mailchimp_api === null  || mailchimp_api === '') {
-      // if(domain === undefined || domain === null || domain === 'null' || domain === '') {
+      if(domain === undefined || domain === null || domain === 'null' || domain === '') {
         console.log("------------------------> ", this.user_array);
         this.mymodalSFU.open();
-      // }
+      }
     }
   }
 
