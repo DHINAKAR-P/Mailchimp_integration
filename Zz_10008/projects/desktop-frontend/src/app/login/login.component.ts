@@ -47,17 +47,19 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.data.username,this.data.password)
     .delay(1000)
     .subscribe(data => {
-      console.log("-----------1323--------------------> > > > > >> > > > ", data)
+      console.log("-----------1323--------------------> > > > > >> > > > ", data); 
       this.campaignService.get_mail_details(data.user._id).subscribe(data => {
         console.log("-------------------------------> > > > > >> > > > ", data);
         // localStorage.setItem("maildetails", JSON.parse(data[0]));
+        if(data.length > 0  ) {
         localStorage.setItem('mailchimp_API', data[0].mailchimp_api); 
         localStorage.setItem('mailchimp_URL', data[0].mailchimp_url); 
         localStorage.setItem('domain', data[0].domain); 
+        }
         this.router.navigate(['/home']);
         window.location.reload();
       })
-    },
+    },   
     error => {
       this.submitted = false;
       this.errorDiagnostic = 'Incorrect username or password.';
