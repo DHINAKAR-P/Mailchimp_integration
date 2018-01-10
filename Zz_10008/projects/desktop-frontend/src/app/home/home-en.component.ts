@@ -28,12 +28,8 @@ export class HomeENComponent implements OnInit {
     this.smtp.domain='';
     this.smtp.smtp_email='';
     this.smtp.smtp_password='';
-
-    if(mailchimp_api === undefined || mailchimp_api === null  || mailchimp_api === '') {
-      if(domain === undefined || domain === null || domain === 'null' || domain === '') {
-        console.log("------------------------> ", this.user_array);
+    if((domain === undefined || domain === null || domain === 'null' || domain === '') && (mailchimp_api === undefined || mailchimp_api === null  || mailchimp_api === '')) {
         this.mymodalSFU.open();
-      }
     }
   }
 
@@ -61,10 +57,10 @@ export class HomeENComponent implements OnInit {
 
       console.log("this.mailchimp---> ", user_info, localStorage.getItem('currentUser'));
       this.campaign_service.update_user_details(user_info).subscribe(data => {
-        console.log("data we are waiting for ===================> ", data);
         localStorage.setItem('mailchimp_API', data.mailchimp_api); 
         localStorage.setItem('mailchimp_URL',data.mailchimp_url); 
         this.mymodalSFU.dismiss();
+        window.location.reload();
       },
       error => {
         
@@ -78,13 +74,14 @@ export class HomeENComponent implements OnInit {
         mailchimp_url: '',
         userid: current_user.user._id,
         updated_date: '',
-        domain: '',
+        domain: this.smtp.domain,
         smtp_email: this.smtp.smtp_email,
         smtp_password: this.smtp.smtp_password
       }  
       this.campaign_service.update_user_details(user_info1).subscribe(data => {
         localStorage.setItem('domain', data.domain); 
         this.mymodalSFU.dismiss();
+        window.location.reload();
       },
       error => {
         
