@@ -9,16 +9,3 @@ module.exports.get_user = function(username,password, callback) {
           }
   });
 }
-
-module.exports.update_user = function(userdetails , callback){
-  Users.findByIdAndUpdate({_id:userdetails._id},{
-    $set:userdetails
-  },{upsert:true, new : true},function(err,userdata){
-    if(err){
-      callback(err)
-    }
-    else{
-    callback(userdata)
-  }
-  })
-}

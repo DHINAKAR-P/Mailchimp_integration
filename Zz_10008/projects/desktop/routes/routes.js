@@ -8,5 +8,6 @@ api.use("/mailchimp/campaigns", routers.CampaignRouter);
 api.use("/mailchimp", routers.ListRouter);
 api.use("/mailchimpapikey" , routers.MailChimpAPIKeyRouter);
 api.use("/user",routers.userRouter);
+api.use("/user",routers.maildetails);
 
 module.exports = api;

@@ -19,21 +19,21 @@ export class HomeENComponent implements OnInit {
   }
 
   ngOnInit() {
-    var cookiedata = localStorage.getItem('currentUser');
-    var json = JSON.parse(cookiedata);
-    this.user_array = json.user;
-    localStorage.setItem('mailchimp_API', this.user_array.mailchimp_api); 
-    localStorage.setItem('mailchimp_URL', this.user_array.mailchimp_url); 
+    var mailchimp_api =  localStorage.getItem('mailchimp_API');
+    var mailchimp_url =  localStorage.getItem('mailchimp_URL');
+    var domain =  localStorage.getItem('domain');
 
     this.mailchip.api_key='';
     this.mailchip.api_url='';
     this.smtp.domain='';
     this.smtp.smtp_email='';
-    this.smtp.password='';
+    this.smtp.smtp_password='';
 
-    if(this.user_array.mailchimp_api === null || this.user_array.mailchimp_api === '') {
-      console.log("------------------------> ", this.user_array);
-      this.mymodalSFU.open();
+    if(mailchimp_api === undefined || mailchimp_api === null || mailchimp_api === 'null' || mailchimp_api === '') {
+      if(domain === undefined || domain === null || domain === 'null' || domain === '') {
+        console.log("------------------------> ", this.user_array);
+        this.mymodalSFU.open();
+      }
     }
   }
 
@@ -52,7 +52,11 @@ export class HomeENComponent implements OnInit {
       var user_info = {
         mailchimp_api: this.mailchip.api_key,
         mailchimp_url: this.mailchip.api_url,
-        _id: current_user.user._id
+        userid: current_user.user._id,
+        updated_date: '',
+        domain: '',
+        smtp_email: '',
+        smtp_password: ''
       }      
 
       console.log("this.mailchimp---> ", user_info, localStorage.getItem('currentUser'));
@@ -60,6 +64,7 @@ export class HomeENComponent implements OnInit {
         console.log("data we are waiting for ===================> ", data);
         localStorage.setItem('mailchimp_API', data.mailchimp_api); 
         localStorage.setItem('mailchimp_URL',data.mailchimp_url); 
+        this.mymodalSFU.dismiss();
       },
       error => {
         
@@ -67,11 +72,19 @@ export class HomeENComponent implements OnInit {
     }
 
     if(this.select_opt_smtp){
-      console.log("this.stmp---> ", this.smtp);
       var current_user = JSON.parse(localStorage.getItem('currentUser'));
-      this.smtp._id = current_user.user._id;
-      this.campaign_service.update_user_details(this.smtp).subscribe(data => {
-        console.log("data we are waiting for ===================> ", data);
+      var user_info1 = {
+        mailchimp_api: '',
+        mailchimp_url: '',
+        userid: current_user.user._id,
+        updated_date: '',
+        domain: '',
+        smtp_email: this.smtp.smtp_email,
+        smtp_password: this.smtp.smtp_password
+      }  
+      this.campaign_service.update_user_details(user_info1).subscribe(data => {
+        localStorage.setItem('domain', data.domain); 
+        this.mymodalSFU.dismiss();
       },
       error => {
         

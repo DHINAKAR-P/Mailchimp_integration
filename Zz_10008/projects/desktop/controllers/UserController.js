@@ -22,16 +22,3 @@ module.exports.get_user = function(req, res) {
       
   });
 }
-module.exports.update_user = function(req ,res){
-    var userdetails = req.body;
-    service.update_user(userdetails , function(userdata){
-        if(userdata){
-        res.status(201)
-        res.json(userdata)
-        }
-        else{
-            res.status(400)
-            
-        }
-    })
-}

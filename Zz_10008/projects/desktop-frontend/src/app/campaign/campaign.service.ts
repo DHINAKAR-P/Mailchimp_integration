@@ -37,6 +37,10 @@ export class CampaignService {
     }
 
     update_user_details(user: any): Observable<any>{
-        return this.apiService.put(this.config.api_url+`/user/updateUser`,user);
+        return this.apiService.post(this.config.api_url+`/user/updatedetails`,user);
+    }
+
+    get_mail_details(id: number): Observable<any>{
+        return this.apiService.get(this.config.api_url+`/user/findbyuserid/`+id);
     }
 }

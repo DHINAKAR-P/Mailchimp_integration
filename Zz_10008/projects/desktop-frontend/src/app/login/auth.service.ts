@@ -35,6 +35,7 @@ const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
+        localStorage.clear();
         this.subject.next();
         this.router.navigate(['/login']);
     }
