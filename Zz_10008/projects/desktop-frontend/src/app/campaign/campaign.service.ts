@@ -29,8 +29,8 @@ export class CampaignService {
         return this.apiService.post(this.config.api_url+`/mailchimp/campaigns/`,campaign);
     }
 
-    send_Campaign(campaign_id: string): Observable<any>{
-        return this.apiService.post(this.config.api_url+`/mailchimp/campaigns/${campaign_id}/send`,{});
+    send_Campaign(campaign_id: string, userid: string): Observable<any>{
+        return this.apiService.post(this.config.api_url+`/mailchimp/campaigns/${campaign_id}/${userid}/send`,{});
     }
     edit_template(template_id:string,compaign_template :any): Observable<any>{
         return this.apiService.patch(this.config.api_url+`/mailchimp/templates/${template_id}`,compaign_template);

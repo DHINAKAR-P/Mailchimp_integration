@@ -42,6 +42,8 @@ module.exports.create_Campaign = function (req, res) {
 ///campaigns/{campaign_id}/actions/send
 module.exports.send_Campaign = function (req, res) {
   var campaign_id = req.params.id;
+  var userid = req.params.userid;
+  console.log("userid to send campaign id---",userid)
   if (req.headers.api_key && req.headers.api_url) {
    // var campaign_id = req.params.id;
     console.log("campaign_id - > ", campaign_id);
@@ -50,12 +52,18 @@ module.exports.send_Campaign = function (req, res) {
       res.json(campaign);
     });
   }
+  else{
+    campaign_localservices.send_campaign(campaign_id,userid,function(campaign){
+     // console.log("controller sid data for send campaign  ",campaign);
+    })
+   }
 }
 //get_campaign_content
 
 //GET Add campaign Content
 module.exports.get_campaign_content = function(req, res) {
   var campaign_id = req.params.id;
+
   if (req.headers.api_key && req.headers.api_url) {
    // var campaign_id = req.params.id;
     service.get_campaign_content(campaign_id, req.headers.api_key, req.headers.api_url, function (campaignContent) {

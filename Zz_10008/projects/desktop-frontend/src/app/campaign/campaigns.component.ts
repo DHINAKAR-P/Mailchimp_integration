@@ -69,7 +69,10 @@ export class CampaignsComponent implements OnInit {
   }
 
   sendCampaign(campaign_id: string){
-    this.campaign_service.send_Campaign(campaign_id)
+    var currentuser = localStorage.getItem("currentUser");
+    var data = JSON.parse(currentuser);
+    var userid = data.user._id;
+    this.campaign_service.send_Campaign(campaign_id, userid)
     .subscribe(data => {
       console.log("data", data);
       this.initialize();

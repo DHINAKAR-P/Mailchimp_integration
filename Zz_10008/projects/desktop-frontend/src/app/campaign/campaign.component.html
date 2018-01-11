@@ -8,7 +8,7 @@
           </div>
           <div class="panel-body">
             <!-- <form id="inputTemplateForm"  #campaignContentForm="ngForm">
-              <button type="submit" (click)="onSubmit(this.dhinaOb)" class="btn btn-primary" [disabled]="!campaignContentForm.form.valid">Save</button>
+               <button type="submit" (click)="onSubmit(this.dhinaOb)" class="btn btn-primary" [disabled]="!campaignContentForm.form.valid">Save</button>
             </form> -->
             <!-- <div class=\"form-group\"><label for=\""+ element +"\">"+ element +"</label><input class=\"form-control\" id=\""+ element +"\"  \"[(ngModel)]=dhinaOb.item"+index+"  type=\"text\" placeholder=\""+ element +"\" \></div> -->
             
@@ -18,7 +18,7 @@
 
                   <!-- <input type="text" class="form-control"  placeholder="{{d.placeholder}}"   [(ngModel)]="model[d.modelPropName]"   name="{{d.name}}"   \> -->
                   <input *ngIf="d.modelPropName !== '|BODY'" type="text" 
-                      class="form-control" 
+                       class="form-control" 
                       placeholder="{{d.placeholder}}" 
                       [(ngModel)]="dhinaOb[d.modelPropName]"
                       name="{{d.name}}"

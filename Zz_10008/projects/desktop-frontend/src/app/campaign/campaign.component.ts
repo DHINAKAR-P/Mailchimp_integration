@@ -129,14 +129,40 @@ export class CampaignComponent implements OnInit {
 
     console.log("------------------------eeeeee------------------>>> ", eee)
     console.log("ONLY - kist to parese> ",this.list_of_input);
+    var mailchip_api = localStorage.getItem("mailchimp_API");
+    var compaign_template = {};
+
+    if(mailchip_api === undefined || mailchip_api === null  || mailchip_api === '') {
+      compaign_template = {
+        template: {
+          sections: data,
+          id: temp_id,
+        }
+      }
+    } else {
+      compaign_template = {
+        template: {
+          html: temp_html,
+          id: temp_id,
+        }
+      }
+      
+    }
 
 
-var compaign_template = {
-  template: {
-    sections: data,
-    id: temp_id,
-  }
-}
+// var compaign_template = {
+//   template: {
+//     sections: data,
+//     id: temp_id,
+//   }
+// }
+
+// var compaign_template = {
+//   template: {
+//     html: temp_html,
+//     id: temp_id,
+//   }
+// }
 
     this.campaign_service.edit_template(this.route.snapshot.paramMap.get('id'),compaign_template).subscribe(data => {
       this.campaign = data;

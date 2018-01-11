@@ -3,10 +3,15 @@
 var dao = require("../daos/Campaign_dao")
 var recipients_dao = require("../daos/recipients_dao")
 var settings_dao = require("../daos/settings_dao")
-var variate_settings_dao = require("../daos/variate_settings_dao")
-var tracking_dao = require("../daos/tracking_dao")
-var rss_opts_dao = require("../daos/rss_opts_dao")
-var social_card_dao =require("../daos/social_card_dao")
+// var variate_settings_dao = require("../daos/variate_settings_dao")
+// var tracking_dao = require("../daos/tracking_dao")
+// var rss_opts_dao = require("../daos/rss_opts_dao")
+// var social_card_dao =require("../daos/social_card_dao")
+var list_dao = require("../daos/List_dao")
+var member_dao = require("../daos/member_dao")
+var nodemailer = require("nodemailer")
+var campaign_template_dao = require("../daos/Campaign_template_dao")
+var mailingdetails_dao = require("../daos/MailingDetailsDao")
 module.exports.create_Campaign = function(campaign,callback) {
   console.log("create data in services----",campaign)
   
@@ -81,6 +86,56 @@ module.exports.search_Campaign_for_update = function(Campaign_id,callback) {
     callback(Campaign);
   });
 }
+
+//send message from campaign
+module.exports.send_campaign = function(campaign_id ,userid , callback){
+  dao.search_Campaign_for_update(campaign_id , function(campaign){
+    mailingdetails_dao.findbyuserid(userid,function(userdetails){
+campaign_template_dao.findtemplatebycampaignid(campaign_id,function(campaign_template){
+ member_dao.getmemberbyuserid(campaign.recipients.list_id , function(listdata){
+   var smtp_email = userdetails[0].smtp_email;
+   var password = userdetails[0].smtp_password;
+   var subject = campaign.settings.subject_line;
+   var domain = userdetails[0].domain
+   var title = campaign.settings.title;
+    console.log("email , password and domain name ",userdetails[0].smtp_email , password , domain);
+  //  console.log("edited template details-----  ",campaign_template[0].edited_html);
+      var members_list = [];
+      var edited_html = campaign_template[0].edited_html;
+      for(var i =0 ; i<listdata.length ; i++){
+      members_list.push(listdata[i].email_address)
+      }
+      var mail = nodemailer.createTransport({
+       service: domain,
+       auth: {
+       user: smtp_email,
+       pass: password
+       }
+      });
+      
+       var mailOptions = {
+       from: smtp_email,
+       to:members_list,
+       subject: subject ,
+       text: edited_html
+      
+       };
+      
+       mail.sendMail(mailOptions, function (error, info) {
+       if (error) {
+       console.log(error);
+       } else {
+       console.log('Email sent: ' + info.response);
+       callback(info.response)
+       }
+       });
+
+    })
+  })
+  })
+})
+}
+
 
 module.exports.get_Campaign_content = function(Campaign_id,callback) {
   console.log("campaign id values----get content--->>> ",Campaign_id)

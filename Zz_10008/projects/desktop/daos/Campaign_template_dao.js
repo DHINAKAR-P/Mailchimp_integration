@@ -24,15 +24,18 @@ var campaign_template_data = new campaign_template_schema(templatevalues)
 //     }
 //   });
 // }
-module.exports.findbycampaigntemplateid = function(Template_id,callback) {
-    Template_schema.findById({ _id: Template_id },  function(Template, error) {
+
+module.exports.findtemplatebycampaignid = function(campaign_id,callback) {
+   campaign_template_schema.find({ campaign_id: campaign_id },  function(campaign, error) {
     if (error) {
       callback(error);
     } else {
-      callback(Template);
+      callback(campaign);
     }
   });
 }
+
+
 // module.exports.delete_template = function(Template_id,callback) {
 //     Template_schema.findByIdAndRemove(Template_id,  function(Template, error) {
 //     if (error) {

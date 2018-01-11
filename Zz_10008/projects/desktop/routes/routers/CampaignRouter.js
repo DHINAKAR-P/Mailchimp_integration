@@ -6,6 +6,6 @@ router.get("/", controller.get_all_campaigns);
 
 router.get("/:id", controller.get_campaign_By_Id);
 router.get("/:id/content", controller.get_campaign_content);
-router.post("/:id/send",controller.send_Campaign);
+router.post("/:id/:userid/send",controller.send_Campaign);
 
 module.exports = router;
