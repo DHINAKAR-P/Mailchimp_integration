@@ -61,7 +61,7 @@ export class CampaignComponent implements OnInit {
   }
 
   get_fields(html_string: string){
-    console.log("get_fields ------------- > ",html_string);
+    // console.log("get_fields ------------- > ",html_string);
     var first = html_string.indexOf("*G|");
     console.log("first count - > ",first);
     console.log("this.campaign.type - > ",this.campaign.type);
@@ -131,18 +131,24 @@ export class CampaignComponent implements OnInit {
     console.log("ONLY - kist to parese> ",this.list_of_input);
     var mailchip_api = localStorage.getItem("mailchimp_API");
     var compaign_template = {};
-
+    console.log("mailchimp api values",mailchip_api);
     if(mailchip_api === undefined || mailchip_api === null  || mailchip_api === '') {
-      compaign_template = {
-        template: {
-          sections: data,
-          id: temp_id,
-        }
-      }
-    } else {
+      
+      console.log("enter if condition means api key not availabel")
       compaign_template = {
         template: {
           html: temp_html,
+          id: temp_id,
+        }
+      }
+     
+      
+    } else {
+      console.log("enter else condition means api key  available")
+      
+      compaign_template = {
+        template: {
+          sections: data,
           id: temp_id,
         }
       }
