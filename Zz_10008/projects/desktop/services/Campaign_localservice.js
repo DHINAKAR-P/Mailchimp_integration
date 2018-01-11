@@ -50,7 +50,7 @@ recipients_dao.create_recipients(campaign.recipients ,function(recipients){
             
         //     var id = social_card._id;
         //     campaign.social_card = id;
-            campaign.status = "drop";
+            campaign.status = "draft";
             console.log("^^^^saving campaign------",campaign)
             dao.create_Campaign(campaign,function (campaign){
                var id = campaign._id;
@@ -71,7 +71,7 @@ module.exports.update_Campaign = function(campaign_id,campaign,callback) {
   dao.update_Campaign(campaign_id,campaign,function (Campaign){
     var id = Campaign._id;
     Campaign.id = id;
-    Campaign.status = "save";
+    Campaign.status = "saved";
     this.campaigndata = {campaigns : Campaign};
     callback(campaigndata);
   });

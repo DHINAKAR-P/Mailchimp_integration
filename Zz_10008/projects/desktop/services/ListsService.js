@@ -34,7 +34,7 @@ module.exports.get_all_Lists = function (api_key, api_url, callback) {
     auth = maildata.auth;
     var options = {
       method: 'GET',
-      url: maildata.api_url + 'lists/',
+      url: maildata.api_url + 'lists/?offset=0&count=1000',
       headers:
         {
           'content-type': 'application/json',
