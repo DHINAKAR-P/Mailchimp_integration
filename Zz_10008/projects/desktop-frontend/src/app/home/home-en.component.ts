@@ -1,9 +1,9 @@
-import {Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit,ViewChild} from '@angular/core';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { CampaignService } from "../campaign/campaign.service";
 
 @Component ({
-    moduleId: module.id, 
+    moduleId: module.id,
     templateUrl: 'home-en.component.html'
 })
 export class HomeENComponent implements OnInit {
@@ -12,26 +12,40 @@ export class HomeENComponent implements OnInit {
   private select_opt_mailchimp : boolean;
   private mailchip:any={};
   private smtp:any={}
+
   @ViewChild('modalSFU')
    mymodalSFU: ModalComponent;
 
-  constructor(private campaign_service: CampaignService) { 
-  }
+  constructor(private campaign_service: CampaignService) {}
 
   ngOnInit() {
-    var mailchimp_api =  localStorage.getItem('mailchimp_API');
-    var mailchimp_url =  localStorage.getItem('mailchimp_URL');
-    var domain =  localStorage.getItem('domain');
+  this.mailchip.api_key = '';
+    this.mailchip.api_url = '';
+    this.smtp.domain = '';
+    this.smtp.smtp_email = '';
+    this.smtp.smtp_password = '';
+    
+      if (localStorage.getItem("currentUser")) {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.campaign_service.get_mail_details(currentUser.user._id).subscribe(data => {
+        if (data.length > 0) {
+          localStorage.setItem('mailchimp_API', data[0].mailchimp_api);
+          localStorage.setItem('mailchimp_URL', data[0].mailchimp_url);
+          localStorage.setItem('domain', data[0].domain);
+        }
+      })
+    }
+    var mailchimp_api = localStorage.getItem('mailchimp_API');
+    var mailchimp_url = localStorage.getItem('mailchimp_URL');
+    var domain = localStorage.getItem('domain');
 
-    this.mailchip.api_key='';
-    this.mailchip.api_url='';
-    this.smtp.domain='';
-    this.smtp.smtp_email='';
-    this.smtp.smtp_password='';
-    if((domain === undefined || domain === null || domain === 'null' || domain === '') && (mailchimp_api === undefined || mailchimp_api === null  || mailchimp_api === '')) {
-        this.mymodalSFU.open();
+  
+    if ((domain === undefined || domain === null || domain === 'null' || domain === '') &&
+     (mailchimp_api === undefined || mailchimp_api === null || mailchimp_api === '')) {
+      this.mymodalSFU.open();
     }
   }
+
 
   select_opt_smtp_method(){
     this.select_opt_mailchimp =false;
@@ -63,7 +77,7 @@ export class HomeENComponent implements OnInit {
         window.location.reload();
       },
       error => {
-        
+
       });
     }
 
@@ -84,7 +98,7 @@ export class HomeENComponent implements OnInit {
         window.location.reload();
       },
       error => {
-        
+
       });
     }
   }
