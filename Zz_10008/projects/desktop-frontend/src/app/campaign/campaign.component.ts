@@ -172,6 +172,7 @@ export class CampaignComponent implements OnInit {
 
     this.campaign_service.edit_template(this.route.snapshot.paramMap.get('id'),compaign_template).subscribe(data => {
       this.campaign = data;
+      this.toastr.success("Template saved!")
     },
     error => {
       this.toastr.error('Check the browser console to see more info.','Error!');

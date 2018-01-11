@@ -1,4 +1,6 @@
 var service = require("../services/CampaignService")
+var template_localservice = require("../services/Template_localservice")
+
 //var mail_config = require("../config/mail_config")
 var campaign_localservices = require("../services/Campaign_localservice");
 //GET ALl Template
@@ -111,5 +113,27 @@ module.exports.put_campaign_content = function (req, res) {
       res.status(201);
       res.json(campaignContent);
     })
+  }
+}
+
+module.exports.edit_Camp_Template = function (req, res) {
+  var Template_id = req.params.id;
+  var Template = req.body;
+
+  console.log("&&&&^^^&edited_template values---->>>",Template)
+  if (req.headers.api_key && req.headers.api_url) {
+    // var Template = req.body;
+    // var Template_id = req.params.id;
+    service.edit_Template(Template, Template_id, req.headers.api_key ,req.headers.api_url, function (template) {
+      res.status(201);
+      res.json(template);
+    });
+  }
+  else{
+    console.log("edited html template____-",Template);
+campaign_template_localservice.create_campaign_template(Template_id, Template , function(template){
+  res.status(201);
+  res.json(template);
+})
   }
 }
