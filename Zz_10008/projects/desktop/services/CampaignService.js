@@ -6,7 +6,7 @@ module.exports.get_all_campaigns = function (api_key, api_url, callback) {
         auth = maildata.auth;
         var options = {
             method: 'GET',
-            url: maildata.api_url + 'campaigns',
+            url: maildata.api_url + 'campaigns/?offset=0&count=1000',
             headers:
                 {
                     'content-type': 'application/json',

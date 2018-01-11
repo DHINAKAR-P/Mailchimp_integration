@@ -57,7 +57,7 @@
                     <span class="label label-info">{{campaign.status}}</span>
                   </div>
                   <div class="campaign-right" >
-                    <button routerLink="/campaigns/{{campaign.id}}"   [disabled]="campaign.status =='save'" class="btn btn-secondary">Details</button>
+                    <button routerLink="/campaigns/{{campaign.id}}"   [disabled]="campaign.status =='saved'" class="btn btn-secondary">Details</button>
                   </div>
                   <div class="campaign-right">
                     <button (click)="sendCampaign(campaign.id)" class="btn btn-secondary">Send</button>
