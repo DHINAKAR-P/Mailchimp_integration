@@ -112,7 +112,7 @@ campaign_template_dao.findtemplatebycampaignid(campaign_id,function(campaign_tem
        pass: password
        }
       });
-      
+      console.log("members_list --- > ",members_list)
        var mailOptions = {
        from: smtp_email,
        to:members_list,

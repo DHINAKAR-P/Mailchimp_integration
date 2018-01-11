@@ -3,6 +3,7 @@ var template_localservice = require("../services/Template_localservice")
 
 //var mail_config = require("../config/mail_config")
 var campaign_localservices = require("../services/Campaign_localservice");
+var campaign_template_servce = require("../services/Campaign_template_localservice")
 //GET ALl Template
 module.exports.get_all_campaigns = function (req, res) {
 //  console.log("getting all campaign in controller")
@@ -57,6 +58,8 @@ module.exports.send_Campaign = function (req, res) {
   else{
     campaign_localservices.send_campaign(campaign_id,userid,function(campaign){
      // console.log("controller sid data for send campaign  ",campaign);
+     res.status(201);
+     res.json("Mail Sent..!!");
     })
    }
 }
@@ -131,9 +134,9 @@ module.exports.edit_Camp_Template = function (req, res) {
   }
   else{
     console.log("edited html template____-",Template);
-campaign_template_localservice.create_campaign_template(Template_id, Template , function(template){
+    campaign_template_servce.create_campaign_template(Template_id, Template , function(template){
   res.status(201);
-  res.json(template);
+  res.json({template});
 })
   }
 }
