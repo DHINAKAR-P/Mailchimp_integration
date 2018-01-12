@@ -12,7 +12,7 @@ module.exports.create_campaign_template = function(campaign_id,campaign_template
         var templatedata = {templates : campaign_template}
        var campaign = {} 
         campaign.edited_template = id;
-        campaign.status = 'save';
+        campaign.status = 'saved';
         campaign_dao.update_Campaign(campaign_template.campaign_id,campaign,function(campaignUpdated){
             if(campaignUpdated){
             }

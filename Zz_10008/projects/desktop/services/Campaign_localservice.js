@@ -117,7 +117,7 @@ campaign_template_dao.findtemplatebycampaignid(campaign_id,function(campaign_tem
        from: smtp_email,
        to:members_list,
        subject: subject ,
-       text: edited_html
+       html: edited_html
       
        };
       

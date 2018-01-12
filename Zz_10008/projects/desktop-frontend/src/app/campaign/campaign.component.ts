@@ -115,17 +115,7 @@ export class CampaignComponent implements OnInit {
    var temp_id = this.campaign.settings.template_id;
     var temp_html = this.myo;
 
-   // var replaced = temp_html.replace("*G|HEADER|G*",'a');
-    var data = {};
-    Object.keys(eee).forEach(function(key) {
-      console.log("key","*G"+key+"|G*")
-      console.log("value",eee[key]);
-      var res_key = key.substring(1).toLowerCase();
-      data[res_key] = eee[key];
-      // data[]
-    //  console.log("str.indexOf",temp_html.indexOf("HEADER"));
-    temp_html= temp_html.replace("*G"+key+"|G*",eee[key]);
-    });
+    var template_html = this.campaign.settings.template_id.html;
 
     console.log("------------------------eeeeee------------------>>> ", eee)
     console.log("ONLY - kist to parese> ",this.list_of_input);
@@ -134,45 +124,57 @@ export class CampaignComponent implements OnInit {
     console.log("mailchimp api values",mailchip_api);
     if(mailchip_api === undefined || mailchip_api === null  || mailchip_api === '') {
       
+      var data = {};
+      Object.keys(eee).forEach(function(key) {
+        console.log("key","*G"+key+"|G*")
+        console.log("value",eee[key]);
+        var res_key = key.substring(1).toLowerCase();
+        data[res_key] = eee[key];
+        // data[]
+      //  console.log("str.indexOf",temp_html.indexOf("HEADER"));
+      template_html= template_html.replace("*G"+key+"|G*",eee[key]);
+      });
+      
       console.log("enter if condition means api key not availabel")
       compaign_template = {
         template: {
-          html: temp_html,
+          html: template_html,
           id: temp_id,
         }
       }
-     
-      
     } else {
-      console.log("enter else condition means api key  available")
-      
+      console.log("enter else condition means api key  available");
+
+      var data = {};
+      Object.keys(eee).forEach(function(key) {
+        console.log("key","*G"+key+"|G*")
+        console.log("value",eee[key]);
+        var res_key = key.substring(1).toLowerCase();
+        data[res_key] = eee[key];
+        // data[]
+      //  console.log("str.indexOf",temp_html.indexOf("HEADER"));
+      temp_html= temp_html.replace("*G"+key+"|G*",eee[key]);
+      });
+
       compaign_template = {
         template: {
           sections: data,
           id: temp_id,
         }
-      }
+      } 
       
     }
 
-
-// var compaign_template = {
-//   template: {
-//     sections: data,
-//     id: temp_id,
-//   }
-// }
-
-// var compaign_template = {
-//   template: {
-//     html: temp_html,
-//     id: temp_id,
-//   }
-// }
-
     this.campaign_service.edit_template(this.route.snapshot.paramMap.get('id'),compaign_template).subscribe(data => {
       this.campaign = data;
+      console.log("saved data in campaign",data)
       this.toastr.success("Template saved!")
+      // setTimeout(function() {
+        
+      //   this.router.navigate(['/campaigns']);
+        
+      // },1000);
+      
     },
     error => {
       this.toastr.error('Check the browser console to see more info.','Error!');
