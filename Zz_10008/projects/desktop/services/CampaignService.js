@@ -16,6 +16,7 @@ module.exports.get_all_campaigns = function (api_key, api_url, callback) {
         };
         request(options, function (error, response, body) {
             if (error) throw new Error(error);
+         // console.log("~~~~~~~getting all campaign data ",body)
             callback(body)
         });
     });
@@ -59,9 +60,11 @@ module.exports.send_Campaign = function (Campaign_id,api_key, api_url, callback)
         };
         request(options, function (error, response, body) {
             if (error) throw new Error(error);
-
-            console.log("-----------body----", body);
-            callback(body)
+            var status={};
+            status = response.statusCode;
+            console.log("-----------body  -  response---", response.statusCode);
+            console.log("-----------body----", status);
+            callback(status)
         });
     });
 }
@@ -145,3 +148,30 @@ module.exports.get_campaign_By_Id = function (campaign_id, api_key, api_url,call
 
     });
 }
+
+module.exports.edit_Template = function (Template,Template_id, api_key, api_url, callback) {
+    // console.log("Template header - > ",Template.sections.header)
+    console.log("Template_id -- > ",Template);
+    BaseMailchimpService.get_auth_header_value(api_key, api_url, function (maildata) {
+      auth = maildata.auth;
+      console.log("Template ------------- > ",Template);
+      var options = {
+        method: 'PUT',
+        url: maildata.api_url + 'campaigns/'+Template_id+"/content",
+        headers:
+          {
+            'content-type': 'application/json',
+            authorization: auth
+          },
+          body:Template,
+        json: true
+      };
+      request(options, function (error, response, body) {
+        if (error){
+        console.log("errrrrrrrrrror occurssss-----",error)
+        }
+        // } throw new Error(error);
+        callback(body)
+      });
+    });
+  }
