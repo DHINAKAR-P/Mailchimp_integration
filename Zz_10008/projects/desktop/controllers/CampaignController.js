@@ -3,7 +3,7 @@ var template_localservice = require("../services/Template_localservice")
 
 //var mail_config = require("../config/mail_config")
 var campaign_localservices = require("../services/Campaign_localservice");
-var campaign_template_servce = require("../services/Campaign_template_localservice");
+var campaign_template_services = require("../services/Campaign_template_localservice");
 var template_edit_for_campaign = require("../services/TemplateService");
 //GET ALl Template
 module.exports.get_all_campaigns = function (req, res) {
@@ -128,14 +128,14 @@ module.exports.edit_Camp_Template = function (req, res) {
   if (req.headers.api_key && req.headers.api_url) {
     // var Template = req.body;
     // var Template_id = req.params.id;
-    template_edit_for_campaign.edit_Template(Template, Template_id, req.headers.api_key ,req.headers.api_url, function (template) {
+    service.edit_Template(Template, Template_id, req.headers.api_key ,req.headers.api_url, function (template) {
       res.status(201);
       res.json(template);
     });
   }
   else{
     console.log("edited html template____-",Template);
-    campaign_template_servce.create_campaign_template(Template_id, Template , function(template){
+    campaign_template_services.create_campaign_template(Template_id, Template , function(template){
   res.status(201);
   res.json({template});
 })
