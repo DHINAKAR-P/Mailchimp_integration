@@ -20,6 +20,7 @@
                 <div class="form-group">
                     <label for="subjectline">SMTP</label>
                     <input required type="text" class="form-control" id="subjectline" name="subjectline" placeholder="DOMAIN: gmail, yahoo, hotmail .... " [(ngModel)]="smtp.domain">
+                    <div *ngIf="smtp.domain == 'gmail'"><span style="color:red">please Enable less secure app in your gmail account</span> </div>
                     <label for="subjectline">Email-ID</label>
                     <input required type="text" class="form-control" id="subjectline" name="subjectline" placeholder="Email-ID: abc@xyz.com " [(ngModel)]="smtp.smtp_email">
                     <label for="subjectline">Password</label>
