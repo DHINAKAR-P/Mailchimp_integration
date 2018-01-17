@@ -1,0 +1,41 @@
+<section>
+    <div class="container">
+        <input type="radio" name="toggle" [value]="select_opt_mailchimp" (click)="select_opt_mailchimp_method()">MailChimp Details
+        <input type="radio" name="toggle" [value]="select_opt_smtp" (click)="select_opt_smtp_method()">SMTP Details
+        <div class="">
+            <div class="row left" *ngIf="select_opt_mailchimp">
+                <h4 class="modal-title">MailChimp Details : </h4>
+                <div class="form-group">
+                    <label for="subjectline">API KEY</label>
+                    <input required type="text" class="form-control" id="subjectline" name="subjectline" placeholder="API KEY" [(ngModel)]="mailchip.api_key">
+                    <label for="subjectline">API URL</label>
+                    <input required type="text" class="form-control" id="subjectline" name="subjectline" placeholder="API URL" [(ngModel)]="mailchip.api_url">
+                </div>
+                <!-- <input type="text" name="api_key" placeholder="Mailchimp API_KEY" [(ngModel)]="mailchip.api_key" />
+				<input type="text" name="api_url" placeholder="Mailchimp API_URL" [(ngModel)]="mailchip.api_url" /> -->
+            </div>
+
+            <div class="row left" *ngIf="select_opt_smtp">
+                <h4 class="modal-title">SMTP Details : </h4>
+                <div class="form-group">
+                    <label for="subjectline">SMTP</label>
+                    <input required type="text" class="form-control" id="subjectline" name="subjectline" placeholder="DOMAIN: gmail, yahoo, hotmail .... " [(ngModel)]="smtp.domain">
+                    <label for="subjectline">Email-ID</label>
+                    <input required type="text" class="form-control" id="subjectline" name="subjectline" placeholder="Email-ID: abc@xyz.com " [(ngModel)]="smtp.smtp_email">
+                    <label for="subjectline">Password</label>
+                    <input required type="text" class="form-control" id="subjectline" name="subjectline" placeholder="Password: ***** " [(ngModel)]="smtp.smtp_password">
+                </div>
+                <!-- <input type="text" name="domain" placeholder="DOMAIN: gmail, yahoo, hotmail .... " [(ngModel)]="smtp.domain" />
+                <input type="text" name="email" placeholder="Email-ID: abc@xyz.com " [(ngModel)]="smtp.smtp_email" />
+                <input type="password" name="password" placeholder="Password: ***** " [(ngModel)]="smtp.smtp_password" /> -->
+            </div>
+        </div>
+        <!-- <div class="form-group">
+            <label for="subjectline">Subject line</label>
+            <input required type="text" class="form-control" id="subjectline" name="subjectline" placeholder="Subject line">
+        </div> -->
+        <div class="row pull-right">
+        <button type="button" class="btn btn-primary" (click)="save_details()"> SAVE</button>
+        <button type="button" class="btns btn-danger" > Cancel</button></div>
+    </div>
+</section>

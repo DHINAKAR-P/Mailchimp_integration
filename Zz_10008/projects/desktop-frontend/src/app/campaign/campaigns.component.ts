@@ -76,15 +76,16 @@ export class CampaignsComponent implements OnInit {
     .subscribe(data => {
       console.log("data", data);
       console.log("send data", data);
-      if(data === 201 || data === 200 ){
       this.initialize();
-      this.toastr.success('Campaign sent!');
-    }
-    else{
-      this.initialize();
-      this.toastr.error('Check the browser console to see more info.','Error code!');
+       this.toastr.success('Campaign sent!');
+    //   if(data === 201 || data === 200 ){
+    //   
+    // }
+    // else{
+    //   this.initialize();
+    //   this.toastr.error('Check the browser console to see more info.','Error code!');
       
-    }
+    // }
     });
     
   }

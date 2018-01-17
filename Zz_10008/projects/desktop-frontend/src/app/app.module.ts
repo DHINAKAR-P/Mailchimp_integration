@@ -30,6 +30,7 @@ import { TemplateModule } from '././template/template.module';
 import { ListsModule } from '././list/list.module';
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { MatInputModule } from '@angular/material';
+import { MailchimpSettingsModule } from './settings/mailchimp.settings.module';
 
 @NgModule({
   imports: [ 
@@ -37,6 +38,7 @@ import { MatInputModule } from '@angular/material';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    MailchimpSettingsModule,
     Ng2Bs3ModalModule,
     HttpModule,
     ToastModule.forRoot(),

@@ -10,6 +10,24 @@
   <div class="collapse navbar-collapse" id="myNavbar">
     <ul class="nav navbar-nav navbar-right">
       <li class="active"><a [routerLink]="['/home']">Home</a></li>
+      <li>
+          <a class="dropdown-toggle fa fa-cog" data-toggle="dropdown"  aria-hidden="true" href="#"> Administrator
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" data-toggle="dropdown">
+            <li class="dropdown-submenu">
+              <a class="fa fa-envelope" aria-hidden="true" [routerLink]="['user']"> MailChimp </a>
+              <ul class="dropdown-menu" >
+                  <li>           
+                    <a [routerLink]="['campaigns']">Campaigns</a>
+                     <a [routerLink]="['lists']">Lists</a>
+                      <a [routerLink]="['templates']">Templates</a>
+                      <a class="fa fa-cogs" aria-hidden="true" [routerLink]="['mailsettingsettings']"> Settings</a>
+                  </li>
+                </ul>
+            </li>
+          </ul>
+        </li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Person_Default_Activity<span class="caret"></span></a>
         <ul class="dropdown-menu">
@@ -17,7 +35,7 @@
 
         </ul>
       </li>
-     <li class="dropdown">
+     <!-- <li class="dropdown">
         <a *ngIf="admin" class="dropdown-toggle" data-toggle="dropdown" href="#">MailChimp
           <span class="caret"></span>
         </a>
@@ -28,8 +46,8 @@
               <a [routerLink]="['templates']">Templates</a>
           </li>
         </ul>
-      </li>
-
+      </li> -->
+    
 
       <li>
         <a  (click)="onsubmit()">Sign out</a>

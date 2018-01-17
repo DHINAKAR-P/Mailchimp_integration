@@ -115,6 +115,16 @@ header {
 
 }
 
+.btns {
+    background-color: rgba(248, 3, 3, 0.8) !important;
+    border-radius: 0.5em !important;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    color: white !important;
+    padding:1em !important;
+
+}
+
 .img-home-side {
     padding-left: 30px;
     padding-top: 180px;

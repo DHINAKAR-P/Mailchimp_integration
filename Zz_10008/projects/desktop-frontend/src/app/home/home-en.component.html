@@ -31,7 +31,7 @@
 </section>
 
 <modal #modalSFU>
-	<modal-header [show-close]="true">
+	<!-- <modal-header [show-close]="true">
 		<h4 class="modal-title">Provide Details...!</h4>
 	</modal-header>
 	<modal-body>
@@ -55,5 +55,12 @@
 	<modal-footer>
 		<button type="button" class="btn btn-default" data-dismiss="modal" (click)="modalSFU.dismiss()">Cancel</button>
 		<button type="button" class="btn btn-primary" (click)="save_details()"> Proceed</button>
-	</modal-footer>
+	</modal-footer> -->
+	<modal-body>
+		Please configure the mailchimp to Activate it !.. <strong>(Administrator > Mailchimp > Settings)</strong>
+		</modal-body>
+		<modal-footer>
+				<button type="button" class="btn btn-default" data-dismiss="modal" (click)="modalSFU.dismiss()">Cancel</button>
+			</modal-footer>
+
 </modal>
